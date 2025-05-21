@@ -3,7 +3,7 @@ name: Generate Maven SBOM
 on:
   push:
     branches:
-      - "sbom-testing" # TO DO: remove
+      - "sbom-testing" # TO DO:remove
   release:
     types: [published]
   workflow_dispatch:
@@ -52,7 +52,7 @@ jobs:
           VERSION="$(jq -r '.metadata.component.version' < ./${{ env.PRODUCT_PATH }}/target/bom.json)"
           echo "PROJECT_VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Product version: $VERSION"
-          
+
       - name: Upload sbom
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
