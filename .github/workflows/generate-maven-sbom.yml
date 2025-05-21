@@ -1,9 +1,6 @@
 name: Generate Maven SBOM
 
 on:
-  push:
-    branches:
-      - "sbom-testing" # TO DO:remove
   release:
     types: [published]
   workflow_dispatch:
@@ -59,12 +56,12 @@ jobs:
           name: sbom
           path: ${{ env.PRODUCT_PATH }}/target/bom.json
 
-  # store-sbom-data: # stores sbom and metadata in a predefined format for otterdog to pick up
-  #   needs: ['generate-sbom']
-  #   uses: eclipse-csi/workflows/.github/workflows/store-sbom-data.yml@main
-  #   with:
-  #     projectName: 'paho.mqtt.java'
-  #     projectVersion: ${{ needs.generate-sbom.outputs.project-version }}
-  #     bomArtifact: 'sbom'
-  #     bomFilename: 'bom.json'
-  #     parentProject: '27463a59-b016-4fa1-8741-7cf4fc61c760'
+  store-sbom-data: # stores sbom and metadata in a predefined format for otterdog to pick up
+    needs: ['generate-sbom']
+    uses: eclipse-csi/workflows/.github/workflows/store-sbom-data.yml@main
+    with:
+      projectName: 'paho.mqtt.java'
+      projectVersion: ${{ needs.generate-sbom.outputs.project-version }}
+      bomArtifact: 'sbom'
+      bomFilename: 'bom.json'
+      parentProject: '27463a59-b016-4fa1-8741-7cf4fc61c760'
